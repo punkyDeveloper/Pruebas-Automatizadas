@@ -1,5 +1,4 @@
 import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
-
 Given('un servicio de solicitud de recogida', function () {
   this.requestData = {
     
@@ -65,10 +64,8 @@ Given('un servicio de solicitud de recogida', function () {
       
   };
 });
-
 When('el usuario envía una fecha de recogida en formato incorrecto {string}', async function (fechaIncorrecta) {
   this.requestData.fechaRecogida = fechaIncorrecta;
-
   cy.request({
     method: 'POST',
     url: 'https://apiv2-test.coordinadora.com/recogidas/cm-solicitud-recogidas-ms/solicitud-recogida',
@@ -84,15 +81,11 @@ When('el usuario envía una fecha de recogida en formato incorrecto {string}', a
     console.log("Response Data:", this.responseData);
   });
 });
-
 Then('el servicio debe responder con un mensaje de error indicando {string}', function (mensajeEsperado) {
   expect(this.responseData).to.exist; // Asegúrate de que existe
   expect(this.responseData.data.message).to.include(mensajeEsperado); // Cambié el path para ajustarlo a la estructura mostrada en la imagen
   expect(this.responseData.data.recogida_anterior).to.be.true; // Validar que el campo recogida_anterior también sea true
 });
-
-
-
 Then('el código de respuesta debe ser {int}', function (codigoEsperado) {
   expect(this.responseStatus).to.exist; // Asegúrate de que existe
   expect(this.responseStatus).to.equal(codigoEsperado);

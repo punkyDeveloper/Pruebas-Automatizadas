@@ -3,7 +3,7 @@ import { Given, When, Then } from 'cypress-cucumber-preprocessor/steps';
 // Paso para inicializar el servicio de solicitud de recogida
 Given('un servicio de solicitud de recogida', function () {
   this.requestData = {
-    "tipoEnvio": "1",
+   "tipoEnvio": "1",
     "tipoProducto": "4",
     "indicativo": "57",
     "tipoDocumento": "13",
@@ -25,7 +25,7 @@ Given('un servicio de solicitud de recogida', function () {
     "tipoVia": 16,
     "nombres": "Santiago",
     "apellidos": "Hernandez",
-    "documento": "", 
+    "documento": "1036149001", 
     "celular": "3005777777",
     "ciudadDetalle": {
       "nombre_terminal_operativa": "Medellin",
@@ -54,7 +54,7 @@ Given('un servicio de solicitud de recogida', function () {
       "nombre_terminal": "Medellin",
       "observaciones": ""
     },
-    "direccion": "Cl 10 # 20 30",
+    "direccion": "Cl 10 # 20 300",
     "fechaRecogida": "",
     "nombreEntrega": "prueba",
     "apellidosEntrega": "prueba1",
@@ -67,10 +67,15 @@ Given('un servicio de solicitud de recogida', function () {
 
 // Paso para configurar el documento como 1036149001
 Given('el usuario configura el documento como {string}', function (documento) {
-  this.requestData.documento = documento; // Asegúrate de que requestData esté definido
+  this.requestData.documento = documento;
 });
 
-When('el usuario envía la solicitud de recogida con un documento duplicado', function () {
+// Paso para configurar la fecha de recogida
+Given('el usuario configura la fecha de recogida como {string}', function (fechaRecogida) {
+  this.requestData.fechaRecogida = fechaRecogida;
+});
+
+When('el usuario envía la solicitud de recogida', function () {
   cy.request({
     method: "POST",
     url: "https://apiv2-test.coordinadora.com/recogidas/cm-solicitud-recogidas-ms/solicitud-recogida",
@@ -87,15 +92,9 @@ When('el usuario envía la solicitud de recogida con un documento duplicado', fu
   });
 });
 
-Then("el mensaje es {string}", function (mensajeEsperado) {
-  expect(this.responseData).to.exist; // Verifica que responseData exista
-  expect(this.responseData.isError).to.be.true; // Verificar que isError sea true
-  expect(this.responseData.data.message).to.include(mensajeEsperado); // Verificar el mensaje de error
-  expect(this.responseData.data.recogida_anterior).to.be.true; // Validar que recogida_anterior sea true
+
+
+Then('el servicio responde con el código {int}', function (codigoEsperado) {
+  expect(this.responseStatus).to.exist;
+  expect(this.responseStatus).to.equal(codigoEsperado);
 });
-
-
-Then('el código de respuesta debe ser {int}', function (codigoEsperado) {
-    expect(this.responseStatus).to.exist; // Asegúrate de que existe
-    expect(this.responseStatus).to.equal(codigoEsperado);
-  });
