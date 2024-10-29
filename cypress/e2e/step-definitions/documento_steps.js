@@ -67,7 +67,7 @@ Given('un servicio de solicitud de recogida', function () {
 
 // Paso para configurar el documento como 1036149001
 Given('el usuario configura el documento como {string}', function (documento) {
-  this.requestData.documento = documento; // Asegúrate de que requestData esté definido
+  this.requestData.documento = documento; 
 });
 
 When('el usuario envía la solicitud de recogida con un documento duplicado', function () {
@@ -88,14 +88,14 @@ When('el usuario envía la solicitud de recogida con un documento duplicado', fu
 });
 
 Then("el mensaje es {string}", function (mensajeEsperado) {
-  expect(this.responseData).to.exist; // Verifica que responseData exista
-  expect(this.responseData.isError).to.be.true; // Verificar que isError sea true
-  expect(this.responseData.data.message).to.include(mensajeEsperado); // Verificar el mensaje de error
-  expect(this.responseData.data.recogida_anterior).to.be.true; // Validar que recogida_anterior sea true
+  expect(this.responseData).to.exist; 
+  expect(this.responseData.isError).to.be.true;
+  expect(this.responseData.data.message).to.include(mensajeEsperado); 
+  expect(this.responseData.data.recogida_anterior).to.be.true; 
 });
 
 
 Then('el código de respuesta debe ser {int}', function (codigoEsperado) {
-    expect(this.responseStatus).to.exist; // Asegúrate de que existe
+    expect(this.responseStatus).to.exist;
     expect(this.responseStatus).to.equal(codigoEsperado);
   });

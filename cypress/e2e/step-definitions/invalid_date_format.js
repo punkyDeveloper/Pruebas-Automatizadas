@@ -82,11 +82,11 @@ When('el usuario envía una fecha de recogida en formato incorrecto {string}', a
   });
 });
 Then('el servicio debe responder con un mensaje de error indicando {string}', function (mensajeEsperado) {
-  expect(this.responseData).to.exist; // Asegúrate de que existe
-  expect(this.responseData.data.message).to.include(mensajeEsperado); // Cambié el path para ajustarlo a la estructura mostrada en la imagen
-  expect(this.responseData.data.recogida_anterior).to.be.true; // Validar que el campo recogida_anterior también sea true
+  expect(this.responseData).to.exist; 
+  expect(this.responseData.data.message).to.include(mensajeEsperado); 
+  expect(this.responseData.data.recogida_anterior).to.be.true; 
 });
 Then('el código de respuesta debe ser {int}', function (codigoEsperado) {
-  expect(this.responseStatus).to.exist; // Asegúrate de que existe
+  expect(this.responseStatus).to.exist; 
   expect(this.responseStatus).to.equal(codigoEsperado);
 });
